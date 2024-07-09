@@ -39,7 +39,6 @@ def show_graph(church):
     plt.axis('equal')
     plt.show()
 
-
 church = Church()
 
 # Main window
