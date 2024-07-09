@@ -4,14 +4,11 @@ from tkinter import messagebox
 from tkcalendar import Calendar
 import matplotlib.pyplot as plt
 
-
 class Church:
     def __init__(self):
         self.visitors = []
         self.programs = ["Aventurer Club", "Pathfinder Club", "Bible Study", "Baptist"]
         self.services = {"Food", "Clothing", "Housing"}
-
-
 def add_visitor_to_church(church, name, age, contact, nationality, interests, visit_date, services):
     visitor = {
         "name": name,
@@ -23,7 +20,6 @@ def add_visitor_to_church(church, name, age, contact, nationality, interests, vi
         "services": services
     }
     church.visitors.append(visitor)
-
 
 def show_graph(church):
     interests_count = {}
@@ -38,12 +34,9 @@ def show_graph(church):
     counts = list(interests_count.values())
 
     plt.figure(figsize=(10, 6))
-    plt.bar(programs, counts, color='skyblue')
-    plt.xlabel('Programs')
-    plt.ylabel('Number of Visitors Interested')
+    plt.pie(counts, labels=programs, autopct='%1.1f%%', startangle=140)
     plt.title('Visitor Interests in Church Programs')
-    plt.xticks(rotation=45)
-    plt.tight_layout()
+    plt.axis('equal')
     plt.show()
 
 
@@ -52,93 +45,120 @@ church = Church()
 # Main window
 window = tkinter.Tk()
 window.title('Church Visitor Management')
+window.configure(bg='olive')  # Set background color to olive green
 
-frame = tkinter.Frame(window)
+frame = tkinter.Frame(window, bg='olive drab')
 frame.pack()
 
+
+# Welcome message
+welcome_label = tkinter.Label(frame, text="Welcome to Toronto Spanish Adventist Church", font=("Helvetica", 16),
+                              bg='olive drab', fg='white')
+welcome_label.grid(row=0, column=0, columnspan=4, pady=10)
+
+
 # Visitor Registration Frame
-visitor_frame = tkinter.LabelFrame(frame, text='New Visitor Registration')
-visitor_frame.grid(row=0, column=0, padx=10, pady=10)
+visitor_frame = tkinter.LabelFrame(frame, text='New Visitor Registration', bg='olive drab')
+visitor_frame.grid(row=1, column=0, padx=10, pady=10, columnspan=4)
 
 # Full Name
-tkinter.Label(visitor_frame, text='Full Name').grid(row=0, column=0, padx=5, pady=5)
+tkinter.Label(visitor_frame, text='Full Name', bg='olive drab').grid(row=0, column=0, padx=5, pady=5)
 fullname_entry = tkinter.Entry(visitor_frame)
 fullname_entry.grid(row=0, column=1, padx=5, pady=5)
 
 # Age
-tkinter.Label(visitor_frame, text='Age').grid(row=0, column=2, padx=5, pady=5)
+tkinter.Label(visitor_frame, text='Age', bg='olive drab').grid(row=0, column=2, padx=5, pady=5)
 agespinbox = tkinter.Spinbox(visitor_frame, from_=16, to=50)
 agespinbox.grid(row=0, column=3, padx=5, pady=5)
 
 # Contact Number
-tkinter.Label(visitor_frame, text='Contact Number').grid(row=1, column=0, padx=5, pady=5)
+tkinter.Label(visitor_frame, text='Contact Number', bg='olive drab').grid(row=1, column=0, padx=5, pady=5)
 contact_entry = tkinter.Entry(visitor_frame)
 contact_entry.grid(row=1, column=1, padx=5, pady=5)
 
 # Nationality
 countries=['AFGHANISTAN', 'ALBANIA', 'ALGERIA', 'AMERICAN SAMOA', 'ANDORRA', 'ANGOLA', 'ANGUILLA', 'ANTARCTICA', 'ANTIGUA AND BARBUDA', 'ARGENTINA', 'ARMENIA', 'ARUBA', 'AUSTRALIA', 'AUSTRIA', 'AZERBAIJAN', 'BAHAMAS', 'BAHRAIN', 'BANGLADESH', 'BARBADOS', 'BELARUS', 'BELGIUM', 'BELIZE', 'BENIN', 'BERMUDA', 'BHUTAN', 'BOLIVIA', 'BOSNIA AND HERZEGOVINA', 'BOTSWANA', 'BOUVET ISLAND', 'BRAZIL', 'BRITISH INDIAN OCEAN TERRITORY', 'BRUNEI DARUSSALAM', 'BULGARIA', 'BURKINA FASO', 'BURUNDI', 'CAMBODIA', 'CAMEROON', 'CANADA', 'CAPE VERDE', 'CAYMAN ISLANDS', 'CENTRAL AFRICAN REPUBLIC', 'CHAD', 'CHILE', 'CHINA', 'CHRISTMAS ISLAND', 'COCOS (KEELING) ISLANDS', 'COLOMBIA', 'COMOROS', 'CONGO', 'CONGO, THE DEMOCRATIC REPUBLIC OF', 'COOK ISLANDS', 'COSTA RICA', "CÃ”TE D'IVOIRE", 'CROATIA', 'CUBA', 'CYPRUS', 'CZECH REPUBLIC', 'DENMARK', 'DJIBOUTI', 'DOMINICA', 'DOMINICAN REPUBLIC', 'ECUADOR', 'EGYPT', 'EL SALVADOR', 'EQUATORIAL GUINEA', 'ERITREA', 'ESTONIA', 'ETHIOPIA', 'FALKLAND ISLANDS (MALVINAS)', 'FAROE ISLANDS', 'FIJI', 'FINLAND', 'FRANCE', 'FRENCH GUIANA', 'FRENCH POLYNESIA', 'FRENCH SOUTHERN TERRITORIES', 'GABON', 'GAMBIA', 'GEORGIA', 'GERMANY', 'GHANA', 'GIBRALTAR', 'GREECE', 'GREENLAND', 'GRENADA', 'GUADELOUPE', 'GUAM', 'GUATEMALA', 'GUINEA', 'GUINEA', 'GUYANA', 'HAITI', 'HEARD ISLAND AND MCDONALD ISLANDS', 'HONDURAS', 'HONG KONG', 'HUNGARY', 'ICELAND', 'INDIA', 'INDONESIA', 'IRAN, ISLAMIC REPUBLIC OF', 'IRAQ', 'IRELAND', 'ISRAEL', 'ITALY', 'JAMAICA', 'JAPAN', 'JORDAN', 'KAZAKHSTAN', 'KENYA', 'KIRIBATI', "KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF", 'KOREA, REPUBLIC OF', 'KUWAIT', 'KYRGYZSTAN', "LAO PEOPLE'S DEMOCRATIC REPUBLIC", 'LATVIA', 'LEBANON', 'LESOTHO', 'LIBERIA', 'LIBYAN ARAB JAMAHIRIYA', 'LIECHTENSTEIN', 'LITHUANIA', 'LUXEMBOURG', 'MACAO', 'MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF', 'MADAGASCAR', 'MALAWI', 'MALAYSIA', 'MALDIVES', 'MALI', 'MALTA', 'MARSHALL ISLANDS', 'MARTINIQUE', 'MAURITANIA', 'MAURITIUS', 'MAYOTTE', 'MEXICO', 'MICRONESIA, FEDERATED STATES OF', 'MOLDOVA, REPUBLIC OF', 'MONACO', 'MONGOLIA', 'MONTSERRAT', 'MOROCCO', 'MOZAMBIQUE', 'MYANMAR', 'NAMIBIA', 'NAURU', 'NEPAL', 'NETHERLANDS', 'NETHERLANDS ANTILLES', 'NEW CALEDONIA', 'NEW ZEALAND', 'NICARAGUA', 'NIGER', 'NIGERIA', 'NIUE', 'NORFOLK ISLAND', 'NORTHERN MARIANA ISLANDS', 'NORWAY', 'OMAN', 'PAKISTAN', 'PALAU', 'PALESTINIAN TERRITORY, OCCUPIED', 'PANAMA', 'PAPUA NEW GUINEA', 'PARAGUAY', 'PERU', 'PHILIPPINES', 'PITCAIRN', 'POLAND', 'PORTUGAL', 'PUERTO RICO', 'QATAR', 'RÃ‰UNION', 'ROMANIA', 'RUSSIAN FEDERATION', 'RWANDA', 'SAINT HELENA', 'SAINT KITTS AND NEVIS', 'SAINT LUCIA', 'SAINT PIERRE AND MIQUELON', 'SAINT VINCENT AND THE GRENADINES', 'SAMOA', 'SAN MARINO', 'SAO TOME AND PRINCIPE', 'SAUDI ARABIA', 'SENEGAL', 'SERBIA AND MONTENEGRO', 'SEYCHELLES', 'SIERRA LEONE', 'SINGAPORE', 'SLOVAKIA', 'SLOVENIA', 'SOLOMON ISLANDS', 'SOMALIA', 'SOUTH AFRICA', 'SOUTH GEORGIA AND SOUTH SANDWICH ISLANDS', 'SPAIN', 'SRI LANKA', 'SUDAN', 'SURINAME', 'SVALBARD AND JAN MAYEN', 'SWAZILAND', 'SWEDEN', 'SWITZERLAND', 'SYRIAN ARAB REPUBLIC', 'TAIWAN, PROVINCE OF CHINA', 'TAJIKISTAN', 'TANZANIA, UNITED REPUBLIC OF', 'THAILAND', 'TIMOR', 'TOGO', 'TOKELAU', 'TONGA', 'TRINIDAD AND TOBAGO', 'TUNISIA', 'TURKEY', 'TURKMENISTAN', 'TURKS AND CAICOS ISLANDS', 'TUVALU', 'UGANDA', 'UKRAINE', 'UNITED ARAB EMIRATES', 'UNITED KINGDOM', 'UNITED STATES', 'UNITED STATES MINOR OUTLYING ISLANDS', 'URUGUAY', 'UZBEKISTAN', 'VANUATU', 'VENEZUELA','VIET NAM', 'VIRGIN ISLANDS, BRITISH', 'VIRGIN ISLANDS, U.S.', 'WALLIS AND FUTUNA', 'WESTERN SAHARA', 'YEMEN', 'ZIMBABWE']
-nationalitylabel=tkinter.Label(visitor_frame,text='Nationality')
-nationalitycombo=ttk.Combobox(visitor_frame,values=countries)
-nationalitylabel.grid(row=1,column=2)
-nationalitycombo.grid(row=1,column=3)
+tkinter.Label(visitor_frame, text='Nationality', bg='olive drab').grid(row=1, column=2, padx=5, pady=5)
+nationality_combobox = ttk.Combobox(visitor_frame, values=countries)
+nationality_combobox.grid(row=1, column=3, padx=5, pady=5)
 
-# Programs of Interest
-program_frame = tkinter.LabelFrame(frame, text='Programs of Interest')
-program_frame.grid(row=1, column=0, padx=0, pady=5)
+# Interests
+tkinter.Label(visitor_frame, text='Programs Available: ', bg='olive drab').grid(row=2, column=0, padx=5, pady=5)
+program_var1 = tkinter.StringVar(value=church.programs[0])
+program_var2 = tkinter.StringVar(value=church.programs[1])
+program_var3 = tkinter.StringVar(value=church.programs[2])
+program_var4 = tkinter.StringVar(value=church.programs[3])
+tkinter.Checkbutton(visitor_frame, text=church.programs[0], variable=program_var1, onvalue=church.programs[0],offvalue='', bg='olive drab').grid(row=2, column=1)
+tkinter.Checkbutton(visitor_frame, text=church.programs[1], variable=program_var2, onvalue=church.programs[1],offvalue='', bg='olive drab').grid(row=2, column=2)
+tkinter.Checkbutton(visitor_frame, text=church.programs[2], variable=program_var3, onvalue=church.programs[2],offvalue='', bg='olive drab').grid(row=2, column=3)
+tkinter.Checkbutton(visitor_frame, text=church.programs[3], variable=program_var4, onvalue=church.programs[3],offvalue='', bg='olive drab').grid(row=2, column=4)
 
-program_vars = {}
-for program in church.programs:
-    program_vars[program] = tkinter.BooleanVar()
-    tkinter.Checkbutton(program_frame, text=program, variable=program_vars[program]).pack(anchor='w')
+# Visit Date
+tkinter.Label(visitor_frame, text='Would you like to schedule a visit? :', bg='olive drab').grid(row=4, column=0, padx=5, pady=5)
+calendar = Calendar(visitor_frame, selectmode='day', year=2023, month=7, day=13)
+calendar.grid(row=5, column=1, padx=5, pady=5)
 
-# Community Help Services
-services_frame = tkinter.LabelFrame(frame, text='Community Help Services')
-services_frame.grid(row=1, column=1, padx=0, pady=3)
+# Services Needed
+tkinter.Label(visitor_frame, text='Services Needed: ', bg='olive drab').grid(row=3, column=0, padx=5, pady=5)
+service_var1 = tkinter.StringVar(value='Food')
+service_var2 = tkinter.StringVar(value='Clothing')
+service_var3 = tkinter.StringVar(value='Housing')
+tkinter.Checkbutton(visitor_frame, text='Food', variable=service_var1, onvalue='Food', offvalue='', bg='olive drab').grid(row=3, column=1)
+tkinter.Checkbutton(visitor_frame, text='Clothing', variable=service_var2, onvalue='Clothing', offvalue='',bg='olive drab').grid(row=3, column=2)
+tkinter.Checkbutton(visitor_frame, text='Housing', variable=service_var3, onvalue='Housing', offvalue='',bg='olive drab').grid(row=3, column=3)
 
-service_vars = {}
-for service in church.services:
-    service_vars[service] = tkinter.BooleanVar()
-    tkinter.Checkbutton(services_frame, text=service, variable=service_vars[service]).pack(anchor='w')
-
-# Calendar for Visit Date required
-visit_date_frame = tkinter.LabelFrame(frame, text='Schedule a visit')
-visit_date_frame.grid(row=4, column=0, padx=5, pady=5)
-cal = Calendar(visit_date_frame, selectmode='day')
-cal.pack(padx=5, pady=5)
-
-# Save Button
-def on_save():
+# Add Visitor Button
+def submit_visitor():
     name = fullname_entry.get()
-    age = agespinbox.get()
+    age = int(agespinbox.get())
     contact = contact_entry.get()
-    nationality = nationalitycombo.get()
-    interests = [program for program, var in program_vars.items() if var.get()]
-    visit_date = cal.get_date()
-    services = [service for service, var in service_vars.items() if var.get()]
+    nationality = nationality_combobox.get()
+    interests = [program_var1.get(), program_var2.get(), program_var3.get(), program_var4.get()]
+    visit_date = calendar.get_date()
+    services = [service_var1.get(), service_var2.get(), service_var3.get()]
 
-    if name and age and contact and nationality and interests and visit_date and services:
-        add_visitor_to_church(church, name, age, contact, nationality, interests, visit_date, services)
-        fullname_entry.delete(0, tkinter.END)
-        agespinbox.delete(0, tkinter.END)
-        contact_entry.delete(0, tkinter.END)
-        nationalitycombo.set('')
-        for var in program_vars.values():
-            var.set(False)
-        for var in service_vars.values():
-            var.set(False)
+    # Remove empty strings from interests and services
+    interests = list(filter(None, interests))
+    services = list(filter(None, services))
 
-        with open('visitors.txt', 'a') as fwrite:
-            fwrite.write(
-                f"{name} {age} {contact} {nationality} {','.join(interests)} {visit_date} {','.join(services)}\n")
-    else:
-        messagebox.showwarning("Input Error","Please fill out all fields and select at least one program and one service.")
+    add_visitor_to_church(church, name, age, contact, nationality, interests, visit_date, services)
 
+    with open('newvisitors.txt', 'a') as file:
+        file.write(f"Name: {name}\n")
+        file.write(f"Age: {age}\n")
+        file.write(f"Contact: {contact}\n")
+        file.write(f"Nationality: {nationality}\n")
+        file.write(f"Interests: {', '.join(interests)}\n")
+        file.write(f"Visit Date: {visit_date}\n")
+        file.write(f"Services: {', '.join(services)}\n")
+        file.write("\n")
 
-save_btn = tkinter.Button(visitor_frame, text='Save', command=on_save)
-save_btn.grid(row=6, column=1, columnspan=2, pady=12)
+    # Show confirmation message
+    messagebox.showinfo("Visitor Added", f"{name} has been added successfully!")
+
+    # Clear the input fields after submission
+    fullname_entry.delete(0, tkinter.END)
+    agespinbox.delete(0, tkinter.END)
+    contact_entry.delete(0, tkinter.END)
+    nationality_combobox.set('')
+    program_var1.set('')
+    program_var2.set('')
+    program_var3.set('')
+    program_var4.set('')
+    service_var1.set('')
+    service_var2.set('')
+    service_var3.set('')
+
+tkinter.Button(frame, text='Add Visitor', command=submit_visitor).grid(row=2, column=0, columnspan=6, pady=10)
 
 # Show Graph Button
-show_graph_btn = tkinter.Button(window, text='Show Graph', command=lambda: show_graph(church))
-show_graph_btn.pack(pady=10)
+def show_interests_graph():
+    if church.visitors:
+        show_graph(church)
+    else:
+        messagebox.showwarning("No Data", "No visitor data to show.")
+
+
+tkinter.Button(frame, text='Show Interests Graph', command=show_interests_graph).grid(row=3, column=0, columnspan=4,pady=10)
 
 window.mainloop()
