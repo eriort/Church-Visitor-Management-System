@@ -39,12 +39,13 @@ def show_graph(church):
     plt.axis('equal')
     plt.show()
 
+
 church = Church()
 
 # Main window
 window = tkinter.Tk()
 window.title('Church Visitor Management')
-window.configure(bg='olive')  # Set background color to olive green
+window.configure(bg='olive drab')  # Set background color to olive green
 
 frame = tkinter.Frame(window, bg='olive drab')
 frame.pack()
@@ -87,10 +88,14 @@ program_var1 = tkinter.StringVar(value=church.programs[0])
 program_var2 = tkinter.StringVar(value=church.programs[1])
 program_var3 = tkinter.StringVar(value=church.programs[2])
 program_var4 = tkinter.StringVar(value=church.programs[3])
-tkinter.Checkbutton(visitor_frame, text=church.programs[0], variable=program_var1, onvalue=church.programs[0],offvalue='', bg='olive drab').grid(row=2, column=1)
-tkinter.Checkbutton(visitor_frame, text=church.programs[1], variable=program_var2, onvalue=church.programs[1],offvalue='', bg='olive drab').grid(row=2, column=2)
-tkinter.Checkbutton(visitor_frame, text=church.programs[2], variable=program_var3, onvalue=church.programs[2],offvalue='', bg='olive drab').grid(row=2, column=3)
-tkinter.Checkbutton(visitor_frame, text=church.programs[3], variable=program_var4, onvalue=church.programs[3],offvalue='', bg='olive drab').grid(row=2, column=4)
+tkinter.Checkbutton(visitor_frame, text=church.programs[0], variable=program_var1, onvalue=church.programs[0],
+                    offvalue='', bg='olive drab').grid(row=2, column=1)
+tkinter.Checkbutton(visitor_frame, text=church.programs[1], variable=program_var2, onvalue=church.programs[1],
+                    offvalue='', bg='olive drab').grid(row=2, column=2)
+tkinter.Checkbutton(visitor_frame, text=church.programs[2], variable=program_var3, onvalue=church.programs[2],
+                    offvalue='', bg='olive drab').grid(row=2, column=3)
+tkinter.Checkbutton(visitor_frame, text=church.programs[3], variable=program_var4, onvalue=church.programs[3],
+                    offvalue='', bg='olive drab').grid(row=2, column=4)
 
 # Visit Date
 tkinter.Label(visitor_frame, text='Would you like to schedule a visit? :', bg='olive drab').grid(row=4, column=0, padx=5, pady=5)
@@ -102,9 +107,13 @@ tkinter.Label(visitor_frame, text='Services Needed: ', bg='olive drab').grid(row
 service_var1 = tkinter.StringVar(value='Food')
 service_var2 = tkinter.StringVar(value='Clothing')
 service_var3 = tkinter.StringVar(value='Housing')
-tkinter.Checkbutton(visitor_frame, text='Food', variable=service_var1, onvalue='Food', offvalue='', bg='olive drab').grid(row=3, column=1)
-tkinter.Checkbutton(visitor_frame, text='Clothing', variable=service_var2, onvalue='Clothing', offvalue='',bg='olive drab').grid(row=3, column=2)
-tkinter.Checkbutton(visitor_frame, text='Housing', variable=service_var3, onvalue='Housing', offvalue='',bg='olive drab').grid(row=3, column=3)
+tkinter.Checkbutton(visitor_frame, text='Food', variable=service_var1, onvalue='Food', offvalue='', bg='olive drab').grid(
+    row=3, column=1)
+tkinter.Checkbutton(visitor_frame, text='Clothing', variable=service_var2, onvalue='Clothing', offvalue='',
+                    bg='olive drab').grid(row=3, column=2)
+tkinter.Checkbutton(visitor_frame, text='Housing', variable=service_var3, onvalue='Housing', offvalue='',
+                    bg='olive drab').grid(row=3, column=3)
+
 
 # Add Visitor Button
 def submit_visitor():
@@ -116,9 +125,9 @@ def submit_visitor():
     visit_date = calendar.get_date()
     services = [service_var1.get(), service_var2.get(), service_var3.get()]
 
-    # Remove empty strings from interests and services
-    interests = list(filter(None, interests))
-    services = list(filter(None, services))
+    if not name or not contact:
+        messagebox.showerror("Error", "Full name and contact information are required to complete your registration.")
+        return
 
     add_visitor_to_church(church, name, age, contact, nationality, interests, visit_date, services)
 
@@ -131,12 +140,11 @@ def submit_visitor():
         file.write(f"Visit Date: {visit_date}\n")
         file.write(f"Services: {', '.join(services)}\n")
         file.write("\n")
-
     # Show confirmation message
-    messagebox.showinfo("Visitor Added", f"{name} has been added successfully!")
+    messagebox.showinfo("Visitor Added", "Visitor information added successfully!")
 
     # Clear the input fields after submission
-    fullname_entry.delete(0, tkinter.END)
+    fullname_entry.delete(0, tkinter.END) #removes all text from the Entry, effectively clearing the field.
     agespinbox.delete(0, tkinter.END)
     contact_entry.delete(0, tkinter.END)
     nationality_combobox.set('')
@@ -148,6 +156,7 @@ def submit_visitor():
     service_var2.set('')
     service_var3.set('')
 
+
 tkinter.Button(frame, text='Add Visitor', command=submit_visitor).grid(row=2, column=0, columnspan=6, pady=10)
 
 # Show Graph Button
@@ -157,7 +166,7 @@ def show_interests_graph():
     else:
         messagebox.showwarning("No Data", "No visitor data to show.")
 
-
-tkinter.Button(frame, text='Show Interests Graph', command=show_interests_graph).grid(row=3, column=0, columnspan=4,pady=10)
+tkinter.Button(frame, text='Show Interests Graph', command=show_interests_graph).grid(row=3, column=0, columnspan=4,
+                                                                                      pady=10)
 
 window.mainloop()
